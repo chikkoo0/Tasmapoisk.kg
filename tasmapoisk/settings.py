@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     'rest_framework_simplejwt',
+    'users',
+    'catalog',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -179,3 +182,4 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization: Bearer <token>
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
+

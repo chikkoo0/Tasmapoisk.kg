@@ -21,3 +21,10 @@ class Review(models.Model):
 
     def str(self):
         return f"{self.user.username} → {self.movie.title}"
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'movie')

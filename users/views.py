@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,14 +11,15 @@ from tasmapoisk import settings
 from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer, FeedbackSerializers
 from .models import Feedback
 
-
+@extend_schema(summary='Регистрация', tags=['Movie'])
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-
+@extend_schema(summary='Логин', tags=['Movie'])
 class LoginView(APIView):
     permission_classes = [AllowAny]
+    serializer_class = LoginSerializer
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -35,7 +37,7 @@ class LoginView(APIView):
             }, status=status.HTTP_200_OK)
         return Response({'error: Login Failed'}, status=status.HTTP_400_BAD_REQUEST)
 
-
+@extend_schema(summary='Профиль', tags=['Movie'])
 class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
@@ -43,7 +45,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-
+@extend_schema(summary='Обратная связь', tags=['Movie'])
 class FeedbackSendView(generics.CreateAPIView):
     serializer_class = FeedbackSerializers
     queryset = Feedback.objects.all()

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import MovieListView, MovieDetailView, ReviewCreateView, MovieSearchView, LatestMoviesView, \
-    MoviesByGenreView, FavoriteListView, AddFavoriteView
+    MoviesByGenreView, FavoriteListView, AddFavoriteView, PersonListView, PersonDetailView, NewsListView, \
+    NewsDetailView, ContactInfoView
 
 urlpatterns = [
     path('movies/', MovieListView.as_view(), name="movie-list"),
@@ -11,4 +12,13 @@ urlpatterns = [
     path('movies/genre/<str:genre>/', MoviesByGenreView.as_view(), name="movies-by-genre"),
     path('favorites/', FavoriteListView.as_view(), name="favorite-list"),
     path('favorites/add/<int:movie_id>/', AddFavoriteView.as_view(), name="favorite-add"),
+    path('people/', PersonListView.as_view(), name='person-list'),
+    path('people/<int:pk>/', PersonDetailView.as_view(), name='person-detail'),
+
+    # 📰 Новости
+    path('news/', NewsListView.as_view(), name='news-list'),
+    path('news/<int:pk>/', NewsDetailView.as_view(), name='news-detail'),
+
+    # 📞 Контакты
+    path('contacts/', ContactInfoView.as_view(), name='contacts'),
 ]

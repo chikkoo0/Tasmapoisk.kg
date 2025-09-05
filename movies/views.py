@@ -109,7 +109,7 @@ class MoviesByGenreView(generics.ListAPIView):
         return Movie.objects.filter(genre=genre_obj)
 
 
-@extend_schema(summary='Избаррнные кино', tags=['Movie'])
+@extend_schema(summary='Избранные кино', tags=['Movie'])
 class FavoriteListView(generics.ListAPIView):
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]

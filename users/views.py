@@ -18,24 +18,24 @@ class RegisterView(generics.CreateAPIView):
 
 @extend_schema(summary='Логин', tags=['Movie'])
 class LoginView(APIView):
-    permission_classes = [AllowAny]
-    serializer_class = LoginSerializer
-
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = authenticate(
-            username=serializer.data['username'],
-            password=serializer.data['password']
-        )
-        if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'message': 'Login Successful'
-            }, status=status.HTTP_200_OK)
-        return Response({'error: Login Failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+
+        user = authenticate(username=username, password=password)
+        if not user:
+            return Response({"error": "Invalid credentials"}, status=400)
+
+        # если JWT
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        })
+
 
 @extend_schema(summary='Профиль', tags=['Movie'])
 class ProfileView(generics.RetrieveUpdateAPIView):

@@ -31,7 +31,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
-    genres = GenreSerializer(many=True)
+    genres = GenreSerializer(source="genre", read_only=True)
 
     class Meta:
         model = Movie

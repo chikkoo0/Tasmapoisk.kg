@@ -8,7 +8,7 @@ services:
       - static_volume:/static
       - media_volume:/media
     restart: always
-    command: sh -c "python manage.py migrate && gunicorn tasmaposik.wsgi:application --bind 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && gunicorn tasmapoisk.wsgi:application --bind 0.0.0.0:8000"
 
   nginx:
     image: nginx

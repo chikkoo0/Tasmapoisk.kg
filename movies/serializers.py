@@ -27,7 +27,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = "__all__"
+        fields = ['name']
 
 class MovieSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -51,4 +51,6 @@ class FavoriteSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         return Favorite.objects.create(user=user, **validated_data)
+
+
 

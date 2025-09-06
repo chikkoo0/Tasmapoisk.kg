@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'modeltranslation',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -50,6 +52,13 @@ INSTALLED_APPS = [
     'aboutus',
 ]
 
+LANGUAGES = (
+    ('ru', 'Русский'),
+    ('en', 'English'),
+    ('kg', 'Кыргызча'),
+)
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,7 +152,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
@@ -179,7 +188,7 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:3000",
                         "http://localhost:5001",
                         "http://localhost:3001",
                         "http://localhost:8000",
-                        "http://194.187.122.34"]
+                        "http://127.0.0.1:8000"]
 
 CORS_ALLOW_METHODS = (
     "DELETE",
@@ -203,3 +212,4 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization: Bearer <token>
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
+

@@ -60,5 +60,5 @@ class FeedbackSendView(generics.CreateAPIView):
             full_message,
             feedback.email,
             [settings.EMAIL_HOST_USER],
-            fail_silently=False,
+            fail_silently=False
         )

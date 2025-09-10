@@ -53,6 +53,7 @@ class News(models.Model):
     image = models.ImageField(upload_to='news_images/', null=True, blank=True)
 
 class Contact(models.Model):
+    name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     address = models.TextField()
@@ -60,4 +61,16 @@ class Contact(models.Model):
     message = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} - {self.email}"
+        return f"{self.email}"
+
+class Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]  # новые комментарии сверху
+
+    def __str__(self):
+        return f"{self.user.username} → {self.movie.title}"

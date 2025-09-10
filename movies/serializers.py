@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movie, Review, Genre, Person, News, Contact, Favorite
+from .models import Movie, Review, Genre, Person, News, Contact, Favorite, Comment
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class NewsSerializer(serializers.ModelSerializer):
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ['id', 'email', 'phone', 'address', 'message', 'created_at']
+        fields = ['name','id', 'email', 'phone', 'address', 'message', 'created_at']
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
@@ -51,6 +51,15 @@ class FavoriteSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         return Favorite.objects.create(user=user, **validated_data)
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)  # показываем имя юзера
+
+    class Meta:
+        model = Comment
+        fields = ["id", "movie", "user", "text", "created_at"]
+        read_only_fields = ["id", "user", "created_at"]
+
 
 
 

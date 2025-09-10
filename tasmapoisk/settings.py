@@ -17,7 +17,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -27,20 +26,19 @@ SECRET_KEY = 'django-insecure-&%tsi$n!-*j2$$badc3$tzqwrm**ma$i!87q%@5%qhoxnkqj^t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
 INSTALLED_APPS = [
     'jazzmin',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'modeltranslation',
     'rest_framework',
     'django_filters',
     'drf_spectacular',
@@ -55,7 +53,7 @@ INSTALLED_APPS = [
 LANGUAGES = (
     ('ru', 'Русский'),
     ('en', 'English'),
-    ('kg', 'Кыргызча'),
+    ('ky', 'Кыргызча'),
 )
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
@@ -90,16 +88,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tasmapoisk.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-  #  DATABASES = {
-      #  'default': {
-          #  'ENGINE': 'django.db.backends.sqlite3',
-           # 'NAME': BASE_DIR / 'db.sqlite3',
-       # }
-    #}
+#  DATABASES = {
+#  'default': {
+#  'ENGINE': 'django.db.backends.sqlite3',
+# 'NAME': BASE_DIR / 'db.sqlite3',
+# }
+# }
 
 DATABASES = {
     'default': {
@@ -114,7 +111,6 @@ DATABASES = {
         }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -134,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -145,7 +140,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -188,7 +182,8 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:3000",
                         "http://localhost:5001",
                         "http://localhost:3001",
                         "http://localhost:8000",
-                        "http://127.0.0.1:8000"]
+                        "http://127.0.0.1:8000",
+                        "http://192.168.110.216:8000"]
 
 CORS_ALLOW_METHODS = (
     "DELETE",
@@ -212,4 +207,3 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),  # Authorization: Bearer <token>
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
-

@@ -1,11 +1,11 @@
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
+from rest_framework import generics, filters, permissions
 from rest_framework.response import Response
 
-from .models import Movie, Review, Genre, Person, News, Contact
+from .models import Movie, Review, Genre, Person, News, Contact, Comment
 from .serializers import MovieSerializer, ReviewSerializer, GenreSerializer, PersonSerializer, NewsSerializer, \
-    ContactSerializer, FavoriteSerializer
+    ContactSerializer, FavoriteSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import Favorite
 from drf_spectacular.utils import extend_schema
@@ -127,4 +127,17 @@ class AddFavoriteView(generics.CreateAPIView):
     def post(self, request, movie_id):
         Favorite.objects.get_or_create(user=request.user, movie_id=movie_id)
         return Response({"status": "added to favorites"})
+
+@extend_schema(summary='Комментарий под кино', tags=['Movie'])
+class CommentListCreateView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        movie_id = self.kwargs["movie_id"]
+        return Comment.objects.filter(movie_id=movie_id)
+
+    def perform_create(self, serializer):
+        movie_id = self.kwargs["movie_id"]
+        serializer.save(user=self.request.user, movie_id=movie_id)
 
